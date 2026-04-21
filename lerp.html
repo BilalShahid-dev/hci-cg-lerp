@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 09: Interpolation Lab</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .result-box { margin-top: 20px; padding: 15px; border: 2px solid #007bff; border-radius: 5px; width: 300px; }
+    </style>
+</head>
+<body>
+    <h2>Linear Interpolation (LERP) Calculator</h2>
+    <p>Define the boundary values for the interpolation:</p>
+    
+    <table>
+        <tr>
+            <td>Start Value (A):</td>
+            <td><input type="number" id="valA" value="0"></td>
+        </tr>
+        <tr>
+            <td>End Value (B):</td>
+            <td><input type="number" id="valB" value="100"></td>
+        </tr>
+    </table>
+
+    <p>Adjust the transition weight (t):</p>
+    <input type="range" id="weightSlider" min="0" max="1" step="0.01" value="0.5" style="width: 200px;">
+
+    <div class="result-box">
+        <p><strong>Current Weight (t):</strong> <span id="tValue">0.5</span></p>
+        <p><strong>Calculated Output:</strong> <span id="calculatedLerp">50</span></p>
+    </div>
+
+    <script>
+        // DOM Elements
+        const inputA = document.getElementById('valA');
+        const inputB = document.getElementById('valB');
+        const slider = document.getElementById('weightSlider');
+        const displayT = document.getElementById('tValue');
+        const displayResult = document.getElementById('calculatedLerp');
+
+        // Alternative LERP formula: A + (B - A) * t
+        function calculateLerp(a, b, weight) {
+            return a + (b - a) * weight;
+        }
+
+        // UI Update Function
+        function refreshUI() {
+            const a = parseFloat(inputA.value) || 0;
+            const b = parseFloat(inputB.value) || 0;
+            const t = parseFloat(slider.value);
+
+            displayT.textContent = t.toFixed(2);
+            displayResult.textContent = calculateLerp(a, b, t).toFixed(2);
+        }
+
+        // Event Listeners for real-time updates
+        slider.addEventListener('input', refreshUI);
+        inputA.addEventListener('input', refreshUI);
+        inputB.addEventListener('input', refreshUI);
+
+        // Initialize on load
+        refreshUI();
+    </script>
+</body>
+</html>
